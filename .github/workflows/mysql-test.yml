@@ -1,0 +1,34 @@
+name: Test MySQL connection on Azure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-azure-mysql:
+    runs-on: ubuntu-latest
+    environment: database-test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install MySQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+
+      - name: Test connection to Azure MySQL
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+        run: |
+          echo "Testing Azure MySQL connection..."
+          mysql \
+            -h "$DB_HOST" \
+            -P "$DB_PORT" \
+            -u "$DB_USER" \
+            -p"$DB_PASSWORD" \
+            -e "SELECT VERSION();" "$DB_NAME"
