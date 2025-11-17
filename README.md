@@ -1,133 +1,47 @@
 🔵 Azure MySQL + GitHub Actions
 
-This project is basically: GitHub Actions 🤖 poking Azure MySQL 🐬 to check if it’s still alive.
-Spoiler: it works. Beautifully.
+This project is basically GitHub Actions 🤖 poking an Azure MySQL Flexible Server 🐬 just to confirm it’s still alive. And yes — it answers back.
 
-Here’s the whole workflow in one line:
-GitHub → Azure → runs SQL → MySQL answers → happiness achieved.
+The whole idea in one line: GitHub → Azure → MySQL → version check → happiness achieved.
 
-🚀 What This Project Does
+It sets up Azure MySQL, creates a database with tables, configures firewall access, saves credentials in GitHub Secrets, and runs a remote SQL test through GitHub Actions. Simple, clean, and perfect for cloud practice.
 
-🏗️ Creates Azure MySQL Flexible Server
+What this project does:
+🏗️ Creates an Azure MySQL Flexible Server
+🗄️ Builds a database and tables
+🌐 Configures public access and firewall
+🔐 Uses GitHub Secrets for credentials
+🤖 Runs a GitHub Actions workflow to test the connection
+📡 Executes SQL commands remotely from the runner
+🎉 Prints the MySQL version if everything works
 
-🗄️ Builds a database + tables
+Azure setup (quick mode):
+Create “Azure Database for MySQL Flexible Server”, choose MySQL 8.0, allow public access, enable your current IP, set admin user mysqladmin, and hit Create. Azure does the rest.
 
-🔥 Opens firewall access
+Database setup:
+Connect using MySQL Workbench, create the livros_db database, add tables for authors, categories and books, and insert some sample data (yes, Harry Potter is included — because of course it is).
 
-🔐 Stores secrets safely in GitHub
+GitHub Secrets required:
+🔒 DB_HOST
+🔒 DB_NAME
+🔒 DB_USER
+🔒 DB_PASSWORD
+🔒 DB_PORT
 
-🤖 Runs a workflow to test MySQL remotely
+These keep your database safe and your commits clean.
 
-📡 Executes SQL straight from GitHub Runner
+Workflow summary:
+GitHub installs the MySQL client, connects to your Azure MySQL server using the secrets, runs a simple SQL command, and returns the MySQL version — proving that everything is working as expected.
 
-🎉 Gives you a version number instead of an error
+How to run:
+Go to GitHub → Actions → “Test MySQL on Azure” → Run workflow → watch the robot do its job. If you see a version number like “8.0.x”, your database is alive and well in the cloud.
 
-☁️ Azure Setup (Fast Mode)
-
-🔧 Create Azure Database for MySQL Flexible Server
-
-🐬 MySQL version: 8.0
-
-🌍 Region: Sweden Central (or Poland Central)
-
-🌐 Public access: ON + Allow your IP
-
-👤 Admin user: mysqladmin
-
-🚀 Click Create
-
-Done! Azure is now doing its magic.
-
-🗄️ Database Setup (MySQL Workbench)
-
-Connection details: 
-
-Host: mysql-roberto-az14.mysql.database.azure.com
-User: mysqladmin@mysql-roberto-az14
-Port: 3306
-
-Tables you’ll create:
-
-✍️ autores
-
-📚 livros
-
-🏷️ categorias
-
-Yes, you also insert Harry Potter. Because of course you do.
-
-🔐 GitHub Secrets
-
-Add these under:
-Settings → Secrets and variables → Actions → New repository secret
-
-Secret	Example
-🔒 DB_HOST	mysql-roberto-az14.mysql.database.azure.com
-🔒 DB_NAME	livros_db
-🔒 DB_USER	mysqladmin@mysql-roberto-az14
-🔒 DB_PASSWORD	your_password
-🔒 DB_PORT	3306
-
-Your password stays hidden from the world. Good job, DevOps apprentice. 🥷
-
-name: Test MySQL on Azure
-on: workflow_dispatch:
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install MySQL client 🐬
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y mysql-client
-
-      - name: Test connection 🔗
-        run: |
-          mysql -h ${{ secrets.DB_HOST }} \
-                 -P ${{ secrets.DB_PORT }} \
-                 -u ${{ secrets.DB_USER }} \
-                 -p${{ secrets.DB_PASSWORD }} \
-                 -e "SELECT VERSION();" ${{ secrets.DB_NAME }}
-
-
-▶️ How to Run
-
-Go to Actions
-
-Select Test MySQL on Azure
-
-Click Run workflow
-
-Watch the robot work 🧠⚡
-
-If everything went well, you’ll see:
-
-+------------+
-| version()  |
-+------------+
-| 8.0.x      |
-
-
-Boom 💥 — remote DB check from the cloud.
-
-🧰 Tech Used
-
-☁️ Microsoft Azure
-
-🐬 MySQL 8
-
+Technologies used:
+☁️ Azure
+🐬 MySQL
 🤖 GitHub Actions
-
 🐧 Ubuntu Runner
-
 🛠️ MySQL Workbench
 
-👨‍💻 Author
-
-Roberto Sławiński
-AWS re/Start • Azure Fundamentals (CESAE Digital)
-Learning cloud one workflow at a time ☁️⚙️
+Author:
+👨‍💻 Roberto Sławiński — AWS re/Start & Azure Fundamentals (CESAE Digital), learning cloud one workflow at a time ☁️⚙️
