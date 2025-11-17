@@ -1,64 +1,65 @@
 🔵✨ AZURE MYSQL + GITHUB ACTIONS
-🤖🐬 “When GitHub meets Azure, magic happens.”
-🧠 What Is This Project About?
+🤖🐬 “When GitHub meets Azure… magic happens.”
+🧠 What This Project Is About
 
-Um pequeno (mas poderoso) projeto onde:
-GitHub Actions 🤖 manda um “hello” para um Azure MySQL Flexible Server 🐬
-e o MySQL responde algo como:
-➡️ “Yep, I'm alive. Version 8.0.x reporting for duty!”
+A small (yet mighty) project where:
+GitHub Actions 🤖 sends a friendly “hey, you alive?”
+to an Azure MySQL Flexible Server 🐬
+and MySQL proudly replies:
+➡️ “Yep. Version 8.0.x reporting for duty!”
 
-Simples. Automático. Elegante.
-E totalmente feito no espírito “DevOps Jedi Padawan” ⭐
+It’s simple. Automated. Clean.
+The perfect little DevOps confidence booster ✨
 
 🚀 What This Project Does
 
-🏗️ Cria um servidor MySQL no Azure
+🏗️ Creates a MySQL Flexible Server on Azure
 
-🗄️ Cria um banco de dados + tabelas
+🗄️ Builds a database + tables
 
-🔐 Configura segredos no GitHub
+🔐 Stores credentials via GitHub Secrets
 
-🌐 Ajusta firewall / acesso público
+🌐 Configures public access & firewall rules
 
-🤖 Executa um workflow automático
+🤖 Runs an automated GitHub Actions workflow
 
-📡 Roda um comando SQL remoto
+📡 Sends SQL commands from the cloud
 
-🎉 E te mostra a versão do MySQL (prova de vida feliz)
+🎉 Shows the MySQL version as proof of life
 
-☁️ Azure Setup (Fast & Furious Edition)
+☁️ Azure Setup (Fast & Furious Mode)
 
-Vá ao Azure Portal
+Open Azure Portal
 
-Crie um MySQL Flexible Server
+Create Azure Database for MySQL – Flexible Server
 
-Escolha MySQL 8.0
+Select MySQL 8.0
 
-Regra de rede: Public access ON
+Enable Public access
 
-Marque: Allow my IP
+Click Allow my IP
 
-Admin: mysqladmin
+Admin name: mysqladmin
 
-Clique em Create
+Press Create
 
-Tome um café ☕ enquanto a Azure trabalha ✨
+Celebrate while Azure deploys ☕✨
 
-🗄️ Database Setup (Workbench Mode ON)
+🗄️ Database Setup (Workbench Time!)
 
-Conecte ao servidor, crie:
+Connect to your server and create:
 
-📚 Banco livros_db
+📚 Database livros_db
 
-🧑‍💼 Tabela autores
+🧑‍💼 Table: authors
 
-📘 Tabela livros
+📘 Table: books
 
-🏷️ Tabela categorias
+🏷️ Table: categories
 
-E insira uns dados para ficar bonito — tipo Harry Potter (porque clássico é clássico).
+Add some sample data — yes, including Harry Potter, because classics belong in every demo.
 
-🔐 GitHub Secrets You Need
+🔐 GitHub Secrets You Must Add
 
 🔸 DB_HOST
 🔸 DB_NAME
@@ -66,35 +67,35 @@ E insira uns dados para ficar bonito — tipo Harry Potter (porque clássico é 
 🔸 DB_PASSWORD
 🔸 DB_PORT
 
-Guardar no cofre (GitHub Secrets), nunca no código. Segurança first. 🕵️‍♂️
+These keep your credentials safe — like a DevOps vault 🕵️‍♂️🔒
 
 🤖 What the Workflow Does
 
-Instala MySQL Client
+Installs MySQL Client
 
-Conecta no Azure MySQL usando Secrets
+Connects to Azure MySQL using Secrets
 
-Executa um comando simples
+Sends a simple SQL query
 
-Te devolve a versão do MySQL
+Returns the MySQL version
 
-Te deixa feliz
+Makes you look like you know what you're doing 😉
 
-Você tira print e mostra ao professor 😄
+100% screenshot-friendly for class or portfolio
 
-▶️ How to Run
+▶️ How to Run It
 
-Abra “Actions” no GitHub
+Go to Actions
 
-Clique: Test MySQL on Azure
+Select Test MySQL on Azure
 
-Clique: Run workflow
+Click Run Workflow
 
-Assista o GitHub trabalhar igual um minion eficiente 🟡🤖
+Watch GitHub work like a tiny cloud-powered minion 🟡🤖
 
-Veja o resultado 8.0.x
+See the output (8.0.x)
 
-Sorria ❤️
+Smile proudly 😄
 
 🧰 Tech Stack
 
@@ -108,4 +109,4 @@ Sorria ❤️
 
 Roberto Sławiński
 AWS re/Start | Azure Fundamentals
-Aprendendo Cloud um workflow por vez ☁️⚙️✨
+Learning cloud one workflow at a time ☁️⚙️✨
