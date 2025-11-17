@@ -1,234 +1,133 @@
-# 🔵 Azure MySQL + GitHub Actions  
-Workflow de teste de conexão com Azure Database for MySQL Flexible Server
+🔵 Azure MySQL + GitHub Actions
 
-Este projeto demonstra como:
+This project is basically: GitHub Actions 🤖 poking Azure MySQL 🐬 to check if it’s still alive.
+Spoiler: it works. Beautifully.
 
-- Criar um servidor MySQL Flexível no Azure  
-- Criar um banco de dados e tabelas  
-- Configurar firewall e acesso  
-- Criar um repositório GitHub  
-- Criar um workflow GitHub Actions para testar a conexão ao banco  
-- Trabalhar com variáveis sensíveis via GitHub Secrets  
+Here’s the whole workflow in one line:
+GitHub → Azure → runs SQL → MySQL answers → happiness achieved.
 
-Tudo organizado como documentação de aula.
+🚀 What This Project Does
 
----
+🏗️ Creates Azure MySQL Flexible Server
 
-# 📌 Objetivos do Projeto
+🗄️ Builds a database + tables
 
-- Provisionar MySQL no Azure  
-- Criar banco e tabelas  
-- Configurar firewall  
-- Criar workflow CI com GitHub Actions  
-- Executar comandos SQL remotamente pelo GitHub  
+🔥 Opens firewall access
 
----
+🔐 Stores secrets safely in GitHub
 
-# 🏗️ Arquitetura
-GitHub Actions → conecta ao → Azure MySQL Flexible Server → executa comando SQL
+🤖 Runs a workflow to test MySQL remotely
 
+📡 Executes SQL straight from GitHub Runner
 
----
+🎉 Gives you a version number instead of an error
 
-# ☁️ 1. Azure — Criação do Servidor MySQL
+☁️ Azure Setup (Fast Mode)
 
-### ✔️ Passo a passo
+🔧 Create Azure Database for MySQL Flexible Server
 
-1. Acesse: https://portal.azure.com  
-2. Criar recurso → **Azure Database for MySQL Flexible Server**  
-3. Escolha **Criação Avançada**  
-4. Configure:
+🐬 MySQL version: 8.0
 
-**Informações básicas**
-- Subscrição: *Azure for Students*
-- Grupo de recursos: `rg-mysql-roberto`
-- Nome do servidor: `mysql-roberto-az14`
-- Região: *Sweden Central* (ou *Poland Central*)
-- Versão: **MySQL 8.0**
-- Workload: **Dev/Test**
+🌍 Region: Sweden Central (or Poland Central)
 
-**Autenticação**
-- Usuário administrador: `mysqladmin`
-- Palavra-passe: *(crie uma senha forte)*
+🌐 Public access: ON + Allow your IP
 
-**Redes**
-- Acesso público: **Sim**
-- Adicionar meu IP atual
+👤 Admin user: mysqladmin
 
-Finalize com **Criar**.
+🚀 Click Create
 
----
+Done! Azure is now doing its magic.
 
-# 🗄️ 2. Banco de Dados — Criação no MySQL Workbench
+🗄️ Database Setup (MySQL Workbench)
 
-Conecte ao servidor usando:
+Connection details: 
 
 Host: mysql-roberto-az14.mysql.database.azure.com
+User: mysqladmin@mysql-roberto-az14
 Port: 3306
-Usuário: mysqladmin@mysql-roberto-az14
-Senha: sua_senha
 
+Tables you’ll create:
 
-### ✔️ SQL para criar banco e tabelas
+✍️ autores
 
-CREATE DATABASE livros_db;
+📚 livros
 
-USE livros_db;
+🏷️ categorias
 
-CREATE TABLE autores (
-    id_autor INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(150),
-    nacionalidade VARCHAR(80)
-);
+Yes, you also insert Harry Potter. Because of course you do.
 
-CREATE TABLE categorias (
-    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100)
-);
+🔐 GitHub Secrets
 
-CREATE TABLE livros (
-    id_livro INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(200),
-    ano_publicacao YEAR,
-    isbn VARCHAR(20),
-    id_autor INT,
-    id_categoria INT,
-    disponivel BOOLEAN DEFAULT TRUE,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_autor) REFERENCES autores(id_autor),
-    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
-);
+Add these under:
+Settings → Secrets and variables → Actions → New repository secret
 
-INSERT INTO autores (nome, nacionalidade)
-VALUES ('J. K. Rowling', 'Reino Unido'),
-       ('George R. R. Martin', 'Estados Unidos');
+Secret	Example
+🔒 DB_HOST	mysql-roberto-az14.mysql.database.azure.com
+🔒 DB_NAME	livros_db
+🔒 DB_USER	mysqladmin@mysql-roberto-az14
+🔒 DB_PASSWORD	your_password
+🔒 DB_PORT	3306
 
-INSERT INTO categorias (nome)
-VALUES ('Fantasia'), ('Ficção Científica');
+Your password stays hidden from the world. Good job, DevOps apprentice. 🥷
 
-INSERT INTO livros (titulo, ano_publicacao, isbn, id_autor, id_categoria)
-VALUES ('Harry Potter e a Pedra Filosofal', 1997, '9780747532699', 1, 1);
-
-
-🔐 3. GitHub — Segredos (Secrets)
-
-No repositório → Settings → Secrets and variables → Actions → New repository secret
-
-Adicione os seguintes Secrets:
-
-Secret	Valor exemplo
-DB_HOST	mysql-roberto-az14.mysql.database.azure.com
-DB_NAME	livros_db
-DB_USER	mysqladmin@mysql-roberto-az14
-DB_PASSWORD	sua senha
-DB_PORT	3306
-
-📁 4. Estrutura do Projeto
-azure-mysql-project/
-│
-├── README.md
-└── .github/
-    └── workflows/
-        └── mysql-test.yml
-
-
-⚙️ 5. Workflow GitHub Actions
-Arquivo: .github/workflows/mysql-test.yml
-
-name: Test MySQL connection on Azure
-
-on:
-  workflow_dispatch:
+name: Test MySQL on Azure
+on: workflow_dispatch:
 
 jobs:
-  test-azure-mysql:
+  test:
     runs-on: ubuntu-latest
-    environment: database-test
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install MySQL client
+      - name: Install MySQL client 🐬
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
 
-      - name: Test connection to Azure MySQL
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-
+      - name: Test connection 🔗
         run: |
-          echo "Testing Azure MySQL connection..."
-          mysql \
-            -h "$DB_HOST" \
-            -P "$DB_PORT" \
-            -u "$DB_USER" \
-            -p"$DB_PASSWORD" \
-            -e "SELECT VERSION();" "$DB_NAME"
-
-▶️ 6. Executando o Workflow
-
-Vá para Actions no repositório
-
-Clique em Test MySQL connection on Azure
-
-Clique em Run workflow
-
-Resultado esperado:
-Testing Azure MySQL connection...
-+----------------------+
-| version()            |
-+----------------------+
-| 8.0.x Azure DB       |
-+----------------------+
-
-🧪 7. Testes do Projeto
-
-Verificar conexão remota via GitHub Runner
-
-Validar credenciais
-
-Validar existência do banco
-
-Conferir versão do MySQL
-
-Instalação automática do cliente MySQL
-
-📚 8. Tecnologias Usadas
-
-Microsoft Azure
-
-Azure Database for MySQL Flexible Server
-
-GitHub
-
-GitHub Actions
-
-MySQL
-
-MySQL Workbench
-
-Ubuntu (GitHub runner)
+          mysql -h ${{ secrets.DB_HOST }} \
+                 -P ${{ secrets.DB_PORT }} \
+                 -u ${{ secrets.DB_USER }} \
+                 -p${{ secrets.DB_PASSWORD }} \
+                 -e "SELECT VERSION();" ${{ secrets.DB_NAME }}
 
 
-🚀 9. Próximos Passos (evolução)
+▶️ How to Run
 
-Deploy automático de tabelas via workflow
+Go to Actions
 
-CI/CD completo com scripts SQL
+Select Test MySQL on Azure
 
-Criar API Node.js conectada ao MySQL do Azure
+Click Run workflow
 
-Inserção automática de dados via Actions
+Watch the robot work 🧠⚡
+
+If everything went well, you’ll see:
+
++------------+
+| version()  |
++------------+
+| 8.0.x      |
 
 
-👨‍💻 Autor
+Boom 💥 — remote DB check from the cloud.
 
-Documentação preparada por Roberto Sławiński
-Com apoio das aulas no programa AWS re/Start + Azure Fundamentals (CESAE Digital).
-Testes SQL automatizados
+🧰 Tech Used
+
+☁️ Microsoft Azure
+
+🐬 MySQL 8
+
+🤖 GitHub Actions
+
+🐧 Ubuntu Runner
+
+🛠️ MySQL Workbench
+
+👨‍💻 Author
+
+Roberto Sławiński
+AWS re/Start • Azure Fundamentals (CESAE Digital)
+Learning cloud one workflow at a time ☁️⚙️
