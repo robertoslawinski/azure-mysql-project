@@ -1,47 +1,111 @@
-🔵 Azure MySQL + GitHub Actions
+🔵✨ AZURE MYSQL + GITHUB ACTIONS
+🤖🐬 “When GitHub meets Azure, magic happens.”
+🧠 What Is This Project About?
 
-This project is basically GitHub Actions 🤖 poking an Azure MySQL Flexible Server 🐬 just to confirm it’s still alive. And yes — it answers back.
+Um pequeno (mas poderoso) projeto onde:
+GitHub Actions 🤖 manda um “hello” para um Azure MySQL Flexible Server 🐬
+e o MySQL responde algo como:
+➡️ “Yep, I'm alive. Version 8.0.x reporting for duty!”
 
-The whole idea in one line: GitHub → Azure → MySQL → version check → happiness achieved.
+Simples. Automático. Elegante.
+E totalmente feito no espírito “DevOps Jedi Padawan” ⭐
 
-It sets up Azure MySQL, creates a database with tables, configures firewall access, saves credentials in GitHub Secrets, and runs a remote SQL test through GitHub Actions. Simple, clean, and perfect for cloud practice.
+🚀 What This Project Does
 
-What this project does:
-🏗️ Creates an Azure MySQL Flexible Server
-🗄️ Builds a database and tables
-🌐 Configures public access and firewall
-🔐 Uses GitHub Secrets for credentials
-🤖 Runs a GitHub Actions workflow to test the connection
-📡 Executes SQL commands remotely from the runner
-🎉 Prints the MySQL version if everything works
+🏗️ Cria um servidor MySQL no Azure
 
-Azure setup (quick mode):
-Create “Azure Database for MySQL Flexible Server”, choose MySQL 8.0, allow public access, enable your current IP, set admin user mysqladmin, and hit Create. Azure does the rest.
+🗄️ Cria um banco de dados + tabelas
 
-Database setup:
-Connect using MySQL Workbench, create the livros_db database, add tables for authors, categories and books, and insert some sample data (yes, Harry Potter is included — because of course it is).
+🔐 Configura segredos no GitHub
 
-GitHub Secrets required:
-🔒 DB_HOST
-🔒 DB_NAME
-🔒 DB_USER
-🔒 DB_PASSWORD
-🔒 DB_PORT
+🌐 Ajusta firewall / acesso público
 
-These keep your database safe and your commits clean.
+🤖 Executa um workflow automático
 
-Workflow summary:
-GitHub installs the MySQL client, connects to your Azure MySQL server using the secrets, runs a simple SQL command, and returns the MySQL version — proving that everything is working as expected.
+📡 Roda um comando SQL remoto
 
-How to run:
-Go to GitHub → Actions → “Test MySQL on Azure” → Run workflow → watch the robot do its job. If you see a version number like “8.0.x”, your database is alive and well in the cloud.
+🎉 E te mostra a versão do MySQL (prova de vida feliz)
 
-Technologies used:
+☁️ Azure Setup (Fast & Furious Edition)
+
+Vá ao Azure Portal
+
+Crie um MySQL Flexible Server
+
+Escolha MySQL 8.0
+
+Regra de rede: Public access ON
+
+Marque: Allow my IP
+
+Admin: mysqladmin
+
+Clique em Create
+
+Tome um café ☕ enquanto a Azure trabalha ✨
+
+🗄️ Database Setup (Workbench Mode ON)
+
+Conecte ao servidor, crie:
+
+📚 Banco livros_db
+
+🧑‍💼 Tabela autores
+
+📘 Tabela livros
+
+🏷️ Tabela categorias
+
+E insira uns dados para ficar bonito — tipo Harry Potter (porque clássico é clássico).
+
+🔐 GitHub Secrets You Need
+
+🔸 DB_HOST
+🔸 DB_NAME
+🔸 DB_USER
+🔸 DB_PASSWORD
+🔸 DB_PORT
+
+Guardar no cofre (GitHub Secrets), nunca no código. Segurança first. 🕵️‍♂️
+
+🤖 What the Workflow Does
+
+Instala MySQL Client
+
+Conecta no Azure MySQL usando Secrets
+
+Executa um comando simples
+
+Te devolve a versão do MySQL
+
+Te deixa feliz
+
+Você tira print e mostra ao professor 😄
+
+▶️ How to Run
+
+Abra “Actions” no GitHub
+
+Clique: Test MySQL on Azure
+
+Clique: Run workflow
+
+Assista o GitHub trabalhar igual um minion eficiente 🟡🤖
+
+Veja o resultado 8.0.x
+
+Sorria ❤️
+
+🧰 Tech Stack
+
 ☁️ Azure
 🐬 MySQL
 🤖 GitHub Actions
 🐧 Ubuntu Runner
 🛠️ MySQL Workbench
 
-Author:
-👨‍💻 Roberto Sławiński — AWS re/Start & Azure Fundamentals (CESAE Digital), learning cloud one workflow at a time ☁️⚙️
+👨‍💻 Author
+
+Roberto Sławiński
+AWS re/Start | Azure Fundamentals
+Aprendendo Cloud um workflow por vez ☁️⚙️✨
